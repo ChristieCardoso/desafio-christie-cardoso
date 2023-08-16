@@ -19,23 +19,19 @@ class CaixaDaLanchonete {
 
         for (const itemQuantidade of itens) {
             const [item, quantidade] = itemQuantidade.split(',');
-            
+
             if (!this.menu[item]) {
                 return "Item inválido!";
             } else if (quantidade <= 0) {
                 return "Quantidade inválida!";
             }
-            if (item === `chantily`) {
+
+            if (item !== "cafe" && item === "chantily") {
                 return "Item extra não pode ser pedido sem o principal";
             }
 
-            if (item.includes('extra')) {
-                const principal = item.split(' com ')[1].split(' ')[0];
-                if (!itensPrincipais.includes(principal)) {
-                    return "Item extra não pode ser pedido sem o principal";
-                }
-            } else {
-                itensPrincipais.push(item); // Adicionar o item principal
+            if (item !== "sanduiche" && item === `queijo` && itens.length <= 2) {
+                return "Item extra não pode ser pedido sem o principal";
             }
 
             valorTotal += this.menu[item] * quantidade;
@@ -58,8 +54,7 @@ class CaixaDaLanchonete {
         }[formaDePagamento];
 
         const valorFinal = (valorTotal * descontoAcrescimo).toFixed(2).replace('.', ',');
-
-        return `R$ ${valorFinal}`; // Retornar o valor formatado
+        return `R$ ${valorFinal}`;
     }
 }
 
